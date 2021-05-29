@@ -3,7 +3,7 @@
   "info": {
     "description": "This is an API for car comments",
     "version": "1.0.0",
-    "title": "Tasks API",
+    "title": "Cars API",
     "contact": {
       "email": "razbarry9392@gmail.com"
     },
@@ -26,6 +26,7 @@
   "paths": {
     "/cars": {
       "get": {
+        "tags": ["Cars"],
         "summary": "Get all the cars",
         "description": "Get all the cars",
         "produces": ["application/json"],
@@ -53,10 +54,9 @@
             }
           }
         }
-      }
-    },
-    "/car": {
+      },
       "post": {
+        "tags": ["Cars"],
         "summary": "Save the car",
         "description": "Save the car",
         "produces": ["application/json"],
@@ -70,7 +70,7 @@
             "schema": {
               "type": "object",
               "properties": {
-                "task": {
+                "car": {
                   "type": "object",
                   "$ref": "#/definitions/Car"
                 }
@@ -105,6 +105,7 @@
     },
     "/cars/{id}": {
       "put": {
+        "tags": ["Cars"],
         "summary": "Update car",
         "description": "Update car",
         "produces": ["application/json"],
@@ -124,7 +125,7 @@
             "schema": {
               "type": "object",
               "properties": {
-                "task": {
+                "car": {
                   "type": "object",
                   "$ref": "#/definitions/Car"
                 }
@@ -155,10 +156,9 @@
             }
           }
         }
-      }
-    },
-    "/car/{id}": {
+      },
       "delete": {
+        "tags": ["Cars"],
         "summary": "Delete car",
         "description": "Delete car",
         "produces": ["application/json"],
@@ -195,13 +195,45 @@
           }
         }
       }
+    },
+    "/comments": {
+      "get": {
+        "tags": ["Comments"],
+        "summary": "Get all the comments",
+        "description": "Get all the comments",
+        "produces": ["application/json"],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/carsResponse"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid status value",
+            "schema": {
+              "$ref": "#/definitions/InvalidResponse"
+            }
+          },
+          "404": {
+            "description": "Invalid route",
+            "schema": {
+              "$ref": "#/definitions/InvalidResponse"
+            }
+          }
+        }
+      }
     }
   },
   "definitions": {
     "carsResponse": {
       "type": "object",
       "properties": {
-        "id": {
+        "_id": {
           "type": "string"
         },
         "name": {
@@ -214,12 +246,19 @@
           "type": "integer"
         },
         "type": {
-          "type": "string"
+          "type": "string",
+          "enum": ["SUV", "4x4", "Familial"]
         },
         "price": {
-          "type": "string"
+          "type": "integer"
         },
         "image": {
+          "type": "string"
+        },
+        "createdAt": {
+          "type": "string"
+        },
+        "updatedAt": {
           "type": "string"
         }
       }
@@ -227,9 +266,6 @@
     "Car": {
       "type": "object",
       "properties": {
-        "id": {
-          "type": "string"
-        },
         "name": {
           "type": "string"
         },
@@ -240,7 +276,8 @@
           "type": "integer"
         },
         "type": {
-          "type": "string"
+          "type": "string",
+          "enum": ["SUV", "4x4", "Familial"]
         },
         "price": {
           "type": "string"

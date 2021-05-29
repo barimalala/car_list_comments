@@ -1,33 +1,49 @@
 import express from 'express';
-import PingController from '../controllers/ping';
 import CarController from '../controllers/CarControllers';
 
 const router = express.Router();
 
-/**
- * @swagger
- * /users:
- *   get:
- *     summary: Retrieve a list of  users
- *     description: Retrieve a list of users from JSONPlaceholder. Can be used to populate a list of fake users when prototyping or testing an API.
- */
-router.get('/', async (_req, res) => {
+router.get('/cars', async (_req, res) => {
   const controller = new CarController();
-  const response = await controller.get();
-  return res.send(response);
+  try {
+    const response = await controller.get();
+    return res.send(response);
+  } catch (error) {
+    return res.status(400).send(error);
+  }
 });
 
-/**
- * @swagger
- * /users:
- *   get:
- *     summary: Retrieve a list of JSONPlaceholder users
- *     description: Retrieve a list of users from JSONPlaceholder. Can be used to populate a list of fake users when prototyping or testing an API.
- */
-router.get('/ping', async (_req, res) => {
-  const controller = new PingController();
-  const response = await controller.getMessage();
-  return res.send(response);
+router.post('/cars', async (req, res) => {
+  try {
+    const controller = new CarController();
+    const response = await controller.post(req.body.car);
+    return res.send(response);
+  } catch (error) {
+    return res.status(400).send(error);
+  }
+});
+
+router.put('/cars/:id', async (req, res) => {
+  try {
+    const controller = new CarController();
+    const response = await controller.put(
+      req.body.car,
+      req.url.replace('/cars/', ''),
+    );
+    return res.send(response);
+  } catch (error) {
+    return res.status(400).send(error);
+  }
+});
+
+router.delete('/cars/:id', async (req, res) => {
+  try {
+    const controller = new CarController();
+    const response = await controller.delete(req.url.replace('/cars/', ''));
+    return res.send(response);
+  } catch (error) {
+    return res.status(400).send(error);
+  }
 });
 
 export default router;
