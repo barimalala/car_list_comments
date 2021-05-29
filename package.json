@@ -1,0 +1,16 @@
+{
+  "devDependencies": {
+    "@types/morgan": "^1.9.2",
+    "@types/swagger-ui-express": "^4.1.2",
+    "concurrently": "^6.2.0",
+    "nodemon": "^2.0.7",
+    "ts-node": "^10.0.0"
+  },
+  "dependencies": {
+    "dotenv": "^10.0.0",
+    "mongoose": "^5.12.12",
+    "morgan": "^1.10.0",
+    "swagger-ui-express": "^4.1.6",
+    "tsoa": "^3.8.0"
+  }
+}
